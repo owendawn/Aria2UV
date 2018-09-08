@@ -1,0 +1,45 @@
+{
+  "name": "aria2uv",
+  "version": "1.0.0",
+  "description": "aria2 ui",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "builddev": "webpack --config webpack.dev.js",
+    "dev": "node dev-server"
+  },
+  "keywords": [
+    "aria2",
+    "ui"
+  ],
+  "author": "owen pan",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.1.3",
+    "css-loader": "^1.0.0",
+    "jquery": "^3.3.1",
+    "node-sass": "^4.9.3",
+    "popper.js": "^1.14.4",
+    "postcss-loader": "^3.0.0",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.0"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "react-hot-loader": "^4.3.6",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
+  }
+}
