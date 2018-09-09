@@ -7,7 +7,6 @@ import {GlobalCommand} from "../../constants/GlobalCommand";
 import Menu from '../../components/Menu'
 import ToDownload from '../../components/ToDownload'
 
-import './Download.scss'
 
 class Waiting extends Component{
     constructor(props){
