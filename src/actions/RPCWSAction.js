@@ -12,3 +12,17 @@ export const getUpdateDownloadStats=(state)=>{
         data:state
     };
 };
+
+export const getUpdateWaitingStats=(state)=>{
+    return{
+        type:RpcWSCommand.WAIT_DOWNLOAD_STATS,
+        data:state
+    };
+};
+
+export const getUpdateFinishStats=(state)=>{
+    return{
+        type:RpcWSCommand.FINISH_DOWNLOAD_STATS,
+        data:state
+    };
+};

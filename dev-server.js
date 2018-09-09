@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const path = require('path');
 const compiler = webpack(config);
 
-const port=80;
+const port=8080;
 
 const server = new WebpackDevServer(compiler, {
     contentBase: path.resolve(__dirname, 'dist'), //默认会以根文件夹提供本地服务器，这里指定文件夹

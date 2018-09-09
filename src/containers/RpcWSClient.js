@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-import {getUpdateDownloadStats,getUpdateGlobalStat} from '../actions/RPCWSAction'
+import {getUpdateDownloadStats,getUpdateGlobalStat,getUpdateWaitingStats,getUpdateFinishStats} from '../actions/RPCWSAction'
 import {withRouter} from "react-router-dom";
 
 class RpcWSClient extends Component{
@@ -16,10 +16,9 @@ class RpcWSClient extends Component{
         this.connect();
     }
     connect(){
-        console.log(this)
         this. ws = new WebSocket("ws://localhost:6800/jsonrpc");
         let that=this;
-        console.log(this.ws)
+        console.log(this)
         that.ws.sendraw=that.ws.send;
         this.ws.send=function (str) {
             that.state.debug&&console.log("send:"+str);
@@ -42,6 +41,10 @@ class RpcWSClient extends Component{
                 that.sendGetGlobalStatREQ();
                 if(that.props.global.downloadSwitch)
                     that.sendTellActiveREQ();
+                if(that.props.global.waitingSwitch)
+                    that.sendTellWaitingREQ();
+                if(that.props.global.finishSwitch)
+                    that.sendTellStopREQ();
             },5000);
         };
 
@@ -54,7 +57,13 @@ class RpcWSClient extends Component{
         this.ws.send('{"jsonrpc":"2.0","method":"aria2.getGlobalStat","id":"sendGetGlobalStatREQ_'+new Date().getTime()+'"}');
     }
     sendTellActiveREQ(){
-        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellActive","id":"sendTellActiveREQ_'+new Date().getTime()+'","params":[["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent"]]}')
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellActive","id":"sendTellActiveREQ_'+new Date().getTime()+'","params":[["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
+    }
+    sendTellWaitingREQ(){
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellWaiting","id":"sendTellWaitingREQ_'+new Date().getTime()+'","params":[0,1000,["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
+    }
+    sendTellStopREQ(){
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellStopped","id":"sendTellStopREQ_'+new Date().getTime()+'","params":[-1,1000,["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
     }
 
     handleMsg(result){
@@ -62,6 +71,10 @@ class RpcWSClient extends Component{
             this.dispatch(getUpdateGlobalStat(result.result));
         }else if(result.id.indexOf("sendTellActiveREQ_")>=0){
             this.dispatch(getUpdateDownloadStats(result.result))
+        }else if(result.id.indexOf("sendTellWaitingREQ_")>=0){
+            this.dispatch(getUpdateWaitingStats(result.result))
+        }else if(result.id.indexOf("sendTellStopREQ_")>=0){
+            this.dispatch(getUpdateFinishStats(result.result))
         }
     }
 

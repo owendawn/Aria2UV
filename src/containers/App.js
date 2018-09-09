@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Switch, Route, Link,withRouter} from 'react-router-dom'
+import {Switch, Route, Link,withRouter,Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import './App.scss'
@@ -8,6 +8,8 @@ import 'bootstrap';
 
 import CommonSetting from './setting/CommonSetting'
 import Download from './download/DownLoad'
+import Finish from './download/Finish'
+import Waiting from './download/Waiting'
 
 import RpcWSClient from './RpcWSClient'
 
@@ -15,6 +17,21 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+        }
+    }
+
+    getSize(size){
+        if(isNaN(Number(size))){
+            return ' -- ';
+        }
+        if(size>1024*1024*1024) {
+            return Math.round(size * 100 / 1024 / 1024/1024) / 100 + "G/s";
+        }else if(size>1024*1024){
+            return Math.round(size*100/1024/1024 )/100+"M/s";
+        }else if(size>1024){
+            return Math.round(size*100/1024 )/100+"K/s";
+        }else{
+            return size+"B/s";
         }
     }
 
@@ -51,8 +68,8 @@ class App extends Component {
                         </ul>
                         <span className="navbar-text">
                             <RpcWSClient />&emsp;
-                            <i className="fa fa-cloud-upload"> {this.props.global.uploadSpeed} </i>&emsp;
-                            <i className="fa fa-cloud-download"> {this.props.global.downloadSpeed} </i>&emsp;
+                            <i className="fa fa-cloud-upload text-light"> {this.getSize(Number(this.props.Global.uploadSpeed))} </i>&emsp;
+                            <i className="fa fa-cloud-download text-light"> {this.getSize(Number(this.props.Global.downloadSpeed))} </i>&emsp;
                         </span>
                         <form className="form-inline my-2 my-lg-0">
                             <input className="form-control mr-sm-2" type="search" placeholder="Search"/>
@@ -62,9 +79,11 @@ class App extends Component {
                 </nav>
                 <main>
                     <Switch>
-                        <Route exact path='/'  render={() => <Redirect to="/Downlaod" />} key="home"/>
-                        <Route exact path='/Download' component={Download} key="download"/>
-                        <Route exact path='/CommonSetting' component={CommonSetting} key="commonsettin"/>
+                        <Route exact path='/'  render={() => <Redirect to="/Download" />}/>
+                        <Route exact path='/Download' component={Download}/>
+                        <Route exact path='/Finish' component={Finish}/>
+                        <Route exact path='/Waiting' component={Waiting}/>
+                        <Route exact path='/CommonSetting' component={CommonSetting}/>
                     </Switch>
                 </main>
             </div>
@@ -73,9 +92,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        global: state.Global,
-    }
+    return state
 };
 
 

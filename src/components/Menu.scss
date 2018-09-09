@@ -1,0 +1,17 @@
+main {
+  .card {
+    border-top: 1px solid #8a898a;
+    border-radius: 0;
+    border-right: 0;
+
+    .list-group:first-child {
+      .list-group-item:first-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+    .list-group-item.active {
+      background-color: #315f54;
+    }
+  }
+}
