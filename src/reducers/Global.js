@@ -9,7 +9,7 @@ const Global = (state = {
 
         downloadSwitch:false,
         waitingSwitch:false,
-        finishSwitch:false
+        finishSwitch:false,
     }, action) => {
         switch (action.type) {
             case GlobalCommand.GLOBAL_STAT: {
@@ -33,6 +33,7 @@ const Global = (state = {
             case GlobalCommand.CLOSE_FINISH_DOWNLOAD:{
                 return Object.assign(state,{finishSwitch:false});
             }
+
             default:
                 return state;
         }

@@ -26,3 +26,24 @@ export const getUpdateFinishStats=(state)=>{
         data:state
     };
 };
+
+export const getUpdateGlobalOptionStat=(state)=>{
+    return{
+        type:RpcWSCommand.GLOBAL_OPTION_STAT,
+        data:state
+    };
+};
+
+export const getRemoveCommandJob=(state)=>{
+    return{
+        type:RpcWSCommand.ROMOVE_COMMAND_JOB,
+        data:state
+    }
+}
+
+export const getAddCommandJob=(state)=>{
+    return{
+        type:RpcWSCommand.ADD_COMMAND_JOB,
+        data:state
+    }
+}

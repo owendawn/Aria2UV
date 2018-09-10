@@ -1,7 +1,13 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-import {getUpdateDownloadStats,getUpdateGlobalStat,getUpdateWaitingStats,getUpdateFinishStats} from '../actions/RPCWSAction'
+import {
+    getUpdateDownloadStats, getUpdateGlobalStat, getUpdateWaitingStats, getUpdateFinishStats,
+    getUpdateGlobalOptionStat, getRemoveCommandJob
+} from '../actions/RPCWSAction'
 import {withRouter} from "react-router-dom";
+import {GlobalCommand} from "../constants/GlobalCommand";
+import {getSimpleCommonAction} from "../actions/CommonAction";
+import {RpcWSCommand} from "../constants/RpcWSCommand";
 
 class RpcWSClient extends Component{
     constructor(props){
@@ -18,7 +24,6 @@ class RpcWSClient extends Component{
     connect(){
         this. ws = new WebSocket("ws://localhost:6800/jsonrpc");
         let that=this;
-        console.log(this)
         that.ws.sendraw=that.ws.send;
         this.ws.send=function (str) {
             that.state.debug&&console.log("send:"+str);
@@ -45,6 +50,14 @@ class RpcWSClient extends Component{
                     that.sendTellWaitingREQ();
                 if(that.props.global.finishSwitch)
                     that.sendTellStopREQ();
+                if(that.props.jobs.length>0)
+                    that.props.jobs.forEach(it=>{
+                       if(it.data===RpcWSCommand.GLOBAL_OPTION_STAT){
+                           that.sendGetGlobalOptionREQ();
+                           that.dispatch(getRemoveCommandJob(it.data))
+                       }
+                    });
+
             },5000);
         };
 
@@ -65,6 +78,10 @@ class RpcWSClient extends Component{
     sendTellStopREQ(){
         this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellStopped","id":"sendTellStopREQ_'+new Date().getTime()+'","params":[-1,1000,["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
     }
+    sendGetGlobalOptionREQ(){
+        // this.ws.send('{"jsonrpc":"2.0","method":"aria2.multicall","id":"sendGetGlobalOptionREQ_'+new Date().getTime()+'","params":[{methodName: "aria2.getGlobalOption"}]}')
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.getGlobalOption","id":"sendGetGlobalOptionREQ_'+new Date().getTime()+'"}')
+    }
 
     handleMsg(result){
         if(result.id.indexOf("sendGetGlobalStatREQ_")>=0){
@@ -75,6 +92,8 @@ class RpcWSClient extends Component{
             this.dispatch(getUpdateWaitingStats(result.result))
         }else if(result.id.indexOf("sendTellStopREQ_")>=0){
             this.dispatch(getUpdateFinishStats(result.result))
+        }else if(result.id.indexOf("sendGetGlobalOptionREQ_")>=0){
+            this.dispatch(getUpdateGlobalOptionStat(result.result))
         }
     }
 
@@ -87,6 +106,7 @@ class RpcWSClient extends Component{
 const mapStateToProps = (state) => {
     return {
         global: state.Global,
+        jobs:state.CommandJobs
     }
 };
 
