@@ -52,8 +52,11 @@ class RpcWSClient extends Component{
                     that.sendTellStopREQ();
                 if(that.props.jobs.length>0)
                     that.props.jobs.forEach(it=>{
-                       if(it.data===RpcWSCommand.GLOBAL_OPTION_STAT){
+                       if(it.data.type===RpcWSCommand.GLOBAL_OPTION_STAT){
                            that.sendGetGlobalOptionREQ();
+                           that.dispatch(getRemoveCommandJob(it.data))
+                       }else if(it.data.type===RpcWSCommand.UPDATE_GLOBAL_OPTION_STAT){
+                           that.sendChangeGlobalOptionREQ(it.data.data);
                            that.dispatch(getRemoveCommandJob(it.data))
                        }
                     });
@@ -67,7 +70,7 @@ class RpcWSClient extends Component{
         this.ws.disconnect();
     }
     sendGetGlobalStatREQ(){
-        this.ws.send('{"jsonrpc":"2.0","method":"aria2.getGlobalStat","id":"sendGetGlobalStatREQ_'+new Date().getTime()+'"}');
+        // this.ws.send('{"jsonrpc":"2.0","method":"aria2.getGlobalStat","id":"sendGetGlobalStatREQ_'+new Date().getTime()+'"}');
     }
     sendTellActiveREQ(){
         this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellActive","id":"sendTellActiveREQ_'+new Date().getTime()+'","params":[["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
@@ -79,8 +82,17 @@ class RpcWSClient extends Component{
         this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellStopped","id":"sendTellStopREQ_'+new Date().getTime()+'","params":[-1,1000,["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
     }
     sendGetGlobalOptionREQ(){
-        // this.ws.send('{"jsonrpc":"2.0","method":"aria2.multicall","id":"sendGetGlobalOptionREQ_'+new Date().getTime()+'","params":[{methodName: "aria2.getGlobalOption"}]}')
         this.ws.send('{"jsonrpc":"2.0","method":"aria2.getGlobalOption","id":"sendGetGlobalOptionREQ_'+new Date().getTime()+'"}')
+    }
+    sendChangeGlobalOptionREQ(data){
+        let str="";
+        for (let k in data){
+            str+='"'+k+'":"'+data[k]+'",';
+        }
+        str=str.substr(0,str.length-1);
+        str='[{'+str+'}]';
+        console.log(str)
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.changeGlobalOption","id":"sendChangeGlobalOptionREQ_'+new Date().getTime()+'","params":'+str+'}')
     }
 
     handleMsg(result){

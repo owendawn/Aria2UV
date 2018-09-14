@@ -49,7 +49,7 @@ class ToDownload extends Component {
     }
 
     getDownloadSpeed(){
-        let str="  （"+this.getSize(Number(this.props.item.completedLength))+" / "+this.getSize(Number(this.props.item.totalLength))+"）";
+        let str="（"+this.getSize(Number(this.props.item.completedLength))+"/"+this.getSize(Number(this.props.item.totalLength))+"）";
         return this.getSize(Number(this.props.item.downloadSpeed))+"/s"+str;
     }
 
@@ -89,31 +89,43 @@ class ToDownload extends Component {
         return (
             <div className="card download-area">
                 <div className="card-header" id={"headingOne" + this.props.item.gid}>
-                    <h5 className="mb-0">
-                        <button className="btn btn-link"
-                                type="button"
-                                data-toggle="collapse"
-                                data-target={"#collapseOne" + this.props.item.gid}
-                                aria-expanded="true"
-                                aria-controls={"collapseOne" + this.props.item.gid}
-                                onClick={this.toggle.bind(this)}
-                                style={{fontSize: '16pt', lineHeight: '14pt'}}>
-                            <i className={['fa', this.state.show ? ' fa-angle-double-up' : ' fa-angle-double-down'].join(" ")}>&nbsp;</i>
-                        </button>
-                        <span><input type='checkbox' />&emsp;</span>
-                        <span className='download-name'
-                              title={this.props.item.bittorrent.info.name}>
+                    <h5 className="mb-0 row">
+                        <div className='col-md-1 col-12'>
+                            <button className="btn btn-link"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target={"#collapseOne" + this.props.item.gid}
+                                    aria-expanded="true"
+                                    aria-controls={"collapseOne" + this.props.item.gid}
+                                    onClick={this.toggle.bind(this)}
+                                    style={{fontSize: '16pt', lineHeight: '14pt',marginLeft:'-15px',marginTop:'-3px'}}>
+                                <i className={['fa', this.state.show ? ' fa-angle-double-up' : ' fa-angle-double-down'].join(" ")}>&nbsp;</i>
+                            </button>
+                        </div>
+                        <div className='col-md-7 col-12 row'>
+                            <span className='download-name col-12'
+                                  title={this.props.item.bittorrent.info.name}>
                             {this.props.item.bittorrent.info.name}</span>
-                        <span className='float-right'>{this.getDownloadSpeed()}</span>
-                        <span className='float-right'>{this.props.item.connections+"个连接"}&emsp;</span>
-
-                        <div className='col-12'>
+                        </div>
+                        <div className='col-md-4 col-12' style={{paddingRight:0}}>
+                            <span >{this.getDownloadSpeed()}</span>
+                            <div className="dropdown float-right">
+                                <button className="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a className="dropdown-item text-success" href="#">开始</a>
+                                    <a className="dropdown-item text-warning" href="#">暂停</a>
+                                    <div className='dropdown-divider'/>
+                                    <a className="dropdown-item text-danger" href="#">删除</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-12' style={{padding: '0 30px',marginTop:'3px'}}>
                             <div className='row'>
-                                <div className="progress col-9" style={{padding:0}}>
+                                <div className="progress col-md-9 col-12" style={{padding:0,marginTop:'5px'}}>
                                     <div className="progress-bar progress-bar-striped" role="progressbar"
                                         style={{width: ratio}}> {ratio} </div>
                                 </div>
-                                <div className='col-3'>
+                                <div className='col-md-3 col-12'>
                                     <span>{this.getCastTime()}</span><span className='float-right'>{this.getFileCount()}</span>
                                 </div>
                             </div>
@@ -141,6 +153,7 @@ class ToDownload extends Component {
                                     </thead>
                                     <tbody>
                                     <tr><td>任务状态</td><td>{this.parseState(this.props.item.status)}</td></tr>
+                                    <tr><td>连接数</td><td>{this.props.item.connections}</td></tr>
                                     <tr><td>创建时间</td><td>{PanUtil.dateFormat.format(createDate,'yyyy-MM-dd HH:mm:ss')}</td></tr>
                                     <tr><td>特征值</td><td>{this.props.item.infoHash}</td></tr>
                                     <tr><td>下载路径</td><td>{this.props.item.dir}</td></tr>

@@ -24,6 +24,12 @@ import ToDownload from '../../components/ToDownload'
 
         return(
             <div className="row">
+                <nav aria-label="breadcrumb" className='col-12'>
+                    <ol className="breadcrumb  mb-0">
+                        <li className="breadcrumb-item"><a href="#">Home</a></li>
+                        <li className="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
                 <div data-spy="scroll" data-target="#list-example" data-offset="0" className="scrollspy-example col-9">
                     <div className="accordion" id="accordionExample">
                         {this.props.Downloads.map((it)=>(<ToDownload item={it} key={it.gid}/>))}

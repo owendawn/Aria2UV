@@ -6,7 +6,7 @@ const CommandJobs = (state = [], action) => {
             return [ ...state,action];
         }
         case RpcWSCommand.ROMOVE_COMMAND_JOB:{
-            return state.filter(it=>(it.data!==action.data));
+            return state.filter(it=>(it.data.type!==action.data.type));
         }
         default:
             return state;

@@ -59,10 +59,9 @@ class App extends Component {
                                     Aria2配置
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <Link to='/CommonSetting' className="dropdown-item">通用设置</Link>
-                                    <a className="dropdown-item" href="#">Another action</a>
+                                    <a className="dropdown-item" href="#">Aria2服务器配置</a>
                                     <div className="dropdown-divider">&nbsp;</div>
-                                    <Link to='/CommonSetting' className="dropdown-item">RCP设置</Link>
+                                    <Link to='/CommonSetting' className="dropdown-item">通用设置</Link>
                                 </div>
                             </li>
                         </ul>

@@ -4,3 +4,10 @@ export const getSimpleCommonAction=(type)=>{
         type:type
     };
 };
+
+export const getBaseCommonAction=(type,data)=>{
+    return {
+        type:type,
+        data:data
+    }
+}
