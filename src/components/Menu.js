@@ -7,7 +7,6 @@ import './Menu.scss'
 class Menu extends Component{
     constructor(props){
         super(props);
-        console.log()
     }
 
     isActive(path){
@@ -18,9 +17,18 @@ class Menu extends Component{
         return (
             <div className="card">
                 <ul className="list-group list-group-flush">
-                    <Link to='/Download' className={["list-group-item list-group-item-action",this.isActive("/Download")].join(" ")} href=''>正在下载</Link>
-                    <Link to='/Waiting' className={["list-group-item list-group-item-action",this.isActive("/Waiting")].join(" ")} href=''>正在等待</Link>
-                    <Link to='/Finish' className={["list-group-item list-group-item-action",this.isActive("/Finish")].join(" ")} href=''>已结束</Link>
+                    <Link to='/Download' className={["list-group-item list-group-item-action",this.isActive("/Download")].join(" ")} href=''>
+                        正在下载&emsp;
+                        <span className={["badge",this.isActive("/Download")?"badge-light":"badge-secondary"].join(" ")}>{this.props.Global.numActive||""}</span>
+                    </Link>
+                    <Link to='/Waiting' className={["list-group-item list-group-item-action",this.isActive("/Waiting")].join(" ")} href=''>
+                        正在等待&emsp;
+                        <span className={["badge",this.isActive("/Waiting")?"badge-light":"badge-secondary"].join(" ")}>{this.props.Global.numWaiting||""}</span>
+                    </Link>
+                    <Link to='/Finish' className={["list-group-item list-group-item-action",this.isActive("/Finish")].join(" ")} href=''>
+                        已经结束&emsp;
+                        <span className={["badge",this.isActive("/Finish")?"badge-light":"badge-secondary"].join(" ")}>{this.props.Global.numStopped||""}</span>
+                    </Link>
                 </ul>
                 <div className="card-body">
                     <h5 className="card-title">Card title</h5>
@@ -35,4 +43,5 @@ class Menu extends Component{
     }
 }
 
-export default withRouter(connect()(Menu));
+const mapStateToProps=(state)=>(state);
+export default withRouter(connect(mapStateToProps)(Menu));

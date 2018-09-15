@@ -7,6 +7,7 @@
     .card-header {
       font-size: 18px;
       font-weight: normal;
+      background-color: #f6ffff;
 
       .download-name {
         text-overflow: ellipsis;
@@ -18,7 +19,7 @@
         margin-top: -5px;
       }
       .progress {
-        background: #a1a1a1;
+        background: #554e4e;
       }
     }
   }

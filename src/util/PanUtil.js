@@ -173,5 +173,37 @@ export const PanUtil = {
     serialize:function(dom){
         var _obj=this.serializeObj(dom);
         return this.parseObjectToFormData(_obj);
+    },
+    notify:function showMsgNotification(title, msg, icon) {
+        var options = {
+            body: msg,
+            icon: icon||"image_url"
+        };
+        var instance;
+        var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+        if(Notification && Notification.permission === "granted"){
+            _init();
+        }else if (Notification && Notification.permission !== "denied") {
+            Notification.requestPermission(function(status) {
+                if (Notification.permission !== status) {
+                    Notification.permission = status;
+                }
+            });
+            _init();
+        }
+        function _init(){
+            if(Notification && Notification.permission === "granted") {
+                instance = new Notification(title, options);
+                instance.onclick = function () {
+                    instance.close();
+                };
+                instance.onerror = function () {
+                };
+                instance.onshow = function () {
+                };
+                instance.onclose = function () {
+                };
+            }
+        }
     }
 };

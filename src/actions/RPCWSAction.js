@@ -48,3 +48,27 @@ export const getAddCommandJob=(state)=>{
     }
 }
 
+
+export const getAddURL=(data,params)=>{
+    return {
+        type:RpcWSCommand.ADD_URL,
+        data:data,
+        params:params
+    }
+}
+
+export const getAddTorrent=(data,params)=>{
+    return {
+        type:RpcWSCommand.ADD_TORRENT,
+        data:data,
+        params:params
+    }
+}
+
+export const getAddMetalink=(data,params)=>{
+    return {
+        type:RpcWSCommand.ADD_METALINK,
+        data:data,
+        params:params
+    }
+}

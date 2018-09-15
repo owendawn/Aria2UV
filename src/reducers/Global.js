@@ -1,11 +1,11 @@
 import {GlobalCommand} from '../constants/GlobalCommand'
 const Global = (state = {
-        "downloadSpeed": "--",
-        "numActive": "--",
-        "numStopped": "--",
-        "numStoppedTotal": "--",
-        "numWaiting": "--",
-        "uploadSpeed": "--",
+        "downloadSpeed": "-",
+        "numActive": "-",
+        "numStopped": "-",
+        "numStoppedTotal": "-",
+        "numWaiting": "-",
+        "uploadSpeed": "-",
 
         downloadSwitch:false,
         waitingSwitch:false,

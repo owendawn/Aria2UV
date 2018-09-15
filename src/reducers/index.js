@@ -6,6 +6,7 @@ import Waitings from './Waitings'
 import Finishs from './Finishs'
 import CommandJobs from './CommandJobs'
 import GlobalOptions from './GlobalOptions'
+import DownloadErrors from "./DownloadErrors";
 
 export default combineReducers({
     Global,
@@ -14,5 +15,6 @@ export default combineReducers({
     Finishs,
 
     CommandJobs,
-    GlobalOptions
+    GlobalOptions,
+    DownloadErrors
 })

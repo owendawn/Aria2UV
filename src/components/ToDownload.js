@@ -6,6 +6,9 @@ import {PanUtil}from '../util/PanUtil'
 import  'bootstrap'
 
 import './ToDownload.scss'
+import {getBaseCommonAction} from "../actions/CommonAction";
+import {RpcWSCommand} from "../constants/RpcWSCommand";
+import {getAddCommandJob} from "../actions/RPCWSAction";
 
 class ToDownload extends Component {
     constructor(props) {
@@ -14,7 +17,6 @@ class ToDownload extends Component {
             show: false,
             showbtlist:false
         }
-        console.log(props.item)
     }
 
     toggle() {
@@ -30,7 +32,7 @@ class ToDownload extends Component {
         if(this.props.item.downloadSpeed!=="0"){
             let leave=Number(this.props.item.totalLength)-Number(this.props.item.completedLength);
             let long=Math.round(leave/Number(this.props.item.downloadSpeed));
-            time=Math.floor(long/60/60)+":"+Math.floor(long/60)+":"+Math.floor(long%60);
+            time=Math.floor(long/60/60)+":"+Math.floor(long%(60*60)/60)+":"+Math.floor(long%60);
         }
         return time;
     }
@@ -69,10 +71,30 @@ class ToDownload extends Component {
     parseState(state){
         switch(state){
             case "active":return "正在下载";
+            case "complete":return "已完成";
+            case "error":return "异常终止";
+            case "paused":return "暂停";
             default:
                 return "未知"
         }
     }
+    command(type){
+        if(type==="remove") {
+            if (this.props.item.status === "error" || this.props.item.status === "complete") {
+                this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.REMOVE_DOWNLOAD_RESULT,this.props.item.gid)))
+            } else {
+                this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.FORCE_REMOVE, this.props.item.gid)));
+            }
+        }else if(type==="pause"){
+            this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.PAUSE, this.props.item.gid)));
+        }else if(type==="unpause"){
+            this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.UNPAUSE, this.props.item.gid)));
+        }else if(type==="redownload"){
+
+        }
+    }
+
+
 
     render() {
         let ratio = '0%';
@@ -80,16 +102,43 @@ class ToDownload extends Component {
             ratio = Math.round(Number(this.props.item.completedLength) * 10000 / Number(this.props.item.totalLength)) / 100 + "%";
         }
 
-        let createDate=new Date();
-        createDate.setMilliseconds(this.props.item.bittorrent.creationDate);
+        let name;
+        let createDate;
+        if(this.props.item.bittorrent) {
+            createDate = new Date(this.props.item.bittorrent.creationDate);
+            // createDate.setMilliseconds(this.props.item.bittorrent.creationDate);
+            name=this.props.item.bittorrent.info?this.props.item.bittorrent.info.name:this.props.item.files[0].path;
+        }else{
+            name=this.props.item.files[0].path.substring(this.props.item.dir.length+1);
+        }
 
-        let arr=this.props.item.bitfield.split("");
-        let complete=0;
-        arr.forEach((it)=>{it==="f"&&(complete+=4)});
+        let arr1 = [];
+        let complete = 0;
+        if(this.props.item.bitfield) {
+            let arr = this.props.item.bitfield.split("");
+            arr.forEach(it => {
+                if (it === "0") {
+                    arr1 = arr1.concat(0, 0, 0, 0);
+                } else if (it === "8") {
+                    complete++;
+                    arr1 = arr1.concat(1, 0, 0, 0)
+                } else if (it === "c") {
+                    complete += 2;
+                    arr1 = arr1.concat(1, 1, 0, 0)
+                } else if (it === "e") {
+                    complete += 3;
+                    arr1 = arr1.concat(1, 1, 1, 0)
+                } else if (it === "f") {
+                    complete += 4;
+                    arr1 = arr1.concat(1, 1, 1, 1)
+                }
+            });
+        }
+
         return (
             <div className="card download-area">
                 <div className="card-header" id={"headingOne" + this.props.item.gid}>
-                    <h5 className="mb-0 row">
+                    <div className="mb-0 row">
                         <div className='col-md-1 col-12'>
                             <button className="btn btn-link"
                                     type="button"
@@ -104,25 +153,25 @@ class ToDownload extends Component {
                         </div>
                         <div className='col-md-7 col-12 row'>
                             <span className='download-name col-12'
-                                  title={this.props.item.bittorrent.info.name}>
-                            {this.props.item.bittorrent.info.name}</span>
+                                  title={name}>
+                            {name}</span>
                         </div>
                         <div className='col-md-4 col-12' style={{paddingRight:0}}>
                             <span >{this.getDownloadSpeed()}</span>
                             <div className="dropdown float-right">
                                 <button className="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a className="dropdown-item text-success" href="#">开始</a>
-                                    <a className="dropdown-item text-warning" href="#">暂停</a>
+                                    {this.props.item.status==="paused"&&<a className="dropdown-item text-success" href="#"  onClick={this.command.bind(this,"unpause")}>开始</a>}
+                                    {this.props.item.status==="active"&&<a className="dropdown-item text-warning" href="#"  onClick={this.command.bind(this,"pause")}>暂停</a>}
                                     <div className='dropdown-divider'/>
-                                    <a className="dropdown-item text-danger" href="#">删除</a>
+                                    <a className="dropdown-item text-danger" href="#" onClick={this.command.bind(this,"remove")}>删除</a>
                                 </div>
                             </div>
                         </div>
                         <div className='col-12' style={{padding: '0 30px',marginTop:'3px'}}>
                             <div className='row'>
                                 <div className="progress col-md-9 col-12" style={{padding:0,marginTop:'5px'}}>
-                                    <div className="progress-bar progress-bar-striped" role="progressbar"
+                                    <div className={["progress-bar progress-bar-striped",this.props.isDownload?'progress-bar-animated':""].join(" ")} role="progressbar"
                                         style={{width: ratio}}> {ratio} </div>
                                 </div>
                                 <div className='col-md-3 col-12'>
@@ -130,7 +179,7 @@ class ToDownload extends Component {
                                 </div>
                             </div>
                         </div>
-                    </h5>
+                    </div>
                 </div>
 
                 <div id={"collapseOne" + this.props.item.gid}
@@ -154,10 +203,11 @@ class ToDownload extends Component {
                                     <tbody>
                                     <tr><td>任务状态</td><td>{this.parseState(this.props.item.status)}</td></tr>
                                     <tr><td>连接数</td><td>{this.props.item.connections}</td></tr>
-                                    <tr><td>创建时间</td><td>{PanUtil.dateFormat.format(createDate,'yyyy-MM-dd HH:mm:ss')}</td></tr>
-                                    <tr><td>特征值</td><td>{this.props.item.infoHash}</td></tr>
                                     <tr><td>下载路径</td><td>{this.props.item.dir}</td></tr>
-                                    <tr><td>BT服务器&emsp;
+                                    {this.props.item.files[0].uris.length>0&&<tr><td>下载链接</td><td>{this.props.item.files[0].uris[0].uri||""}</td></tr>}
+                                    {this.props.item.bittorrent&&<tr><td>创建时间</td><td>{PanUtil.dateFormat.format(createDate,'yyyy-MM-dd HH:mm:ss')}</td></tr>}
+                                    {this.props.item.infoHash&&<tr><td>特征值</td><td>{this.props.item.infoHash}</td></tr>}
+                                    {this.props.item.announceList&& (<tr><td>BT服务器&emsp;
                                         <a className='pointer' onClick={this.toggleBtList.bind(this)}>
                                             <i className={["fa",this.state.showbtlist?"fa-chevron-up":"fa-chevron-down"].join(" ")}>&nbsp;</i>
                                         </a></td>
@@ -165,7 +215,7 @@ class ToDownload extends Component {
                                             rows={this.state.showbtlist?this.props.item.bittorrent.announceList.length+1:2}
                                             defaultValue={this.props.item.bittorrent.announceList.map((it,idx)=>(it+"\n")).join("")}
                                             style={{width:'100%',resize:"none",overflow:'auto'}}
-                                        /></td></tr>
+                                        /></td></tr>)}
                                     </tbody>
                                 </table>
                             </div>
@@ -179,7 +229,9 @@ class ToDownload extends Component {
                                         </span>
                                     </div>
                                     <div className="col-12">
-                                        {arr.map((it,idx)=>(idx*4<Number(this.props.item.numPieces)&&<div className={["piece",it==="f"?"complete":""].join(" ")} key={idx}>&nbsp;</div>))}
+                                        {arr1.map((it,idx)=>(
+                                            idx+1<=Number(this.props.item.numPieces)&&<div className={["piece",it===1?"complete":""].join(" ")} key={idx}>&nbsp;</div>
+                                        ))}
                                     </div>
                                     <div className='mb-3'>&nbsp;</div>
                                 </div>
