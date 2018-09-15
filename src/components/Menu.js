@@ -31,12 +31,12 @@ class Menu extends Component{
                     </Link>
                 </ul>
                 <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 className="card-title">Just Kidding</h5>
+                    <p className="card-text">☺ -v- Jest with an ass and he will flap you in the face with his tail.</p>
                 </div>
                 <div className="card-body">
-                    <a href="#" className="card-link">Card link</a>
-                    <a href="#" className="card-link">Another link</a>
+                    <a href="#" className="card-link">HaHa</a>
+                    <a href="#" className="card-link">HeHe</a>
                 </div>
             </div>
         )

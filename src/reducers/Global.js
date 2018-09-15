@@ -13,16 +13,16 @@ const Global = (state = {
     }, action) => {
         switch (action.type) {
             case GlobalCommand.GLOBAL_STAT: {
-                return Object.assign(state,action.data);
+                return Object.assign({},state,action.data);
             }
             case GlobalCommand.OPEN_DOWNLOAD:{
-                return Object.assign(state,{downloadSwitch:true});
+                return Object.assign({},state,{downloadSwitch:true});
             }
             case GlobalCommand.CLOSE_DOWNLOAD:{
-                return Object.assign(state,{downloadSwitch:false});
+                return Object.assign({},state,{downloadSwitch:false});
             }
             case GlobalCommand.OPEN_WAIT_DOWNLOAD:{
-                return Object.assign(state,{waitingSwitch:true});
+                return Object.assign({},state,{waitingSwitch:true});
             }
             case GlobalCommand.CLOSE_WAIT_DOWNLOAD:{
                 return Object.assign(state,{waitingSwitch:false});

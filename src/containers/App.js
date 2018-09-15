@@ -6,6 +6,7 @@ import './App.scss'
 import 'jquery'
 import 'bootstrap';
 
+import Aria2Setting from './setting/Aria2Setting'
 import CommonSetting from './setting/CommonSetting'
 import Download from './download/DownLoad'
 import Finish from './download/Finish'
@@ -20,20 +21,7 @@ class App extends Component {
         }
     }
 
-    getSize(size){
-        if(isNaN(Number(size))){
-            return ' -- ';
-        }
-        if(size>1024*1024*1024) {
-            return Math.round(size * 100 / 1024 / 1024/1024) / 100 + "G/s";
-        }else if(size>1024*1024){
-            return Math.round(size*100/1024/1024 )/100+"M/s";
-        }else if(size>1024){
-            return Math.round(size*100/1024 )/100+"K/s";
-        }else{
-            return size+"B/s";
-        }
-    }
+
 
     componentDidMount() {
     }
@@ -59,30 +47,25 @@ class App extends Component {
                                     Aria2配置
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item" href="#">Aria2服务器配置</a>
-                                    <div className="dropdown-divider">&nbsp;</div>
+                                    <Link to='/Aria2Setting' className="dropdown-item">Aria2服务器配置</Link>
+                                    <div className="dropdown-divider" style={{borderTopWidth:'2px'}}/>
                                     <Link to='/CommonSetting' className="dropdown-item">通用设置</Link>
                                 </div>
                             </li>
                         </ul>
                         <span className="navbar-text">
-                            <RpcWSClient />&emsp;
-                            <i className="fa fa-cloud-upload text-light"> {this.getSize(Number(this.props.Global.uploadSpeed))} </i>&emsp;
-                            <i className="fa fa-cloud-download text-light"> {this.getSize(Number(this.props.Global.downloadSpeed))} </i>&emsp;
+                            <RpcWSClient />
                         </span>
-                        <form className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search"/>
-                            <button className="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-                        </form>
                     </div>
                 </nav>
-                <main>
+                <main style={{overflowX:'hidden'}}>
                     <Switch>
                         <Route exact path='/'  render={() => <Redirect to="/Download" />}/>
                         <Route exact path='/Download' component={Download}/>
                         <Route exact path='/Finish' component={Finish}/>
                         <Route exact path='/Waiting' component={Waiting}/>
                         <Route exact path='/CommonSetting' component={CommonSetting}/>
+                        <Route exact path='/Aria2Setting' component={Aria2Setting}/>
                     </Switch>
                 </main>
             </div>

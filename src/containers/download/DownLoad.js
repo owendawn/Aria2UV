@@ -22,7 +22,6 @@ import {getAddCommandJob, getAddMetalink, getAddTorrent, getAddURL} from "../../
             newOptions:{},
             btContent:null,
         }
-        console.log(props)
     }
     componentDidMount(){
         this.props.dispatch(getSimpleCommonAction(GlobalCommand.OPEN_DOWNLOAD))
@@ -76,20 +75,23 @@ import {getAddCommandJob, getAddMetalink, getAddTorrent, getAddURL} from "../../
             that.setState({btContent:this.result.replace("data:;base64,","")});
          }
      }
+     chooseIt(gid){
+        this.setState({chooseId:gid})
+     }
 
     render(){
         return(
             <div className="row">
                 <nav aria-label="breadcrumb" className='col-12'>
-                    <ol className="breadcrumb  mb-0">
+                    <ol className="breadcrumb  mb-0" style={{    padding: '0.2rem 1rem'}}>
                         <li className="breadcrumb-item"><a className='btn btn-link' href='#' onClick={this.showModal.bind(this,'showURL')}>新增下载链接</a></li>
                         <li className="breadcrumb-item"><a className='btn btn-link' href='#' onClick={this.showModal.bind(this,'showBT')}>新增BT</a></li>
-                        <li className="breadcrumb-item"><a className='btn btn-link' href='#' onClick={this.showModal.bind(this,'showMetalink')}>新增磁力链接</a></li>
+                        <li className="breadcrumb-item"><a className='btn btn-link' href='#' onClick={this.showModal.bind(this,'showMetalink')}>新增MetaLink</a></li>
                     </ol>
                 </nav>
                 <div data-spy="scroll" data-target="#list-example" data-offset="0" className="scrollspy-example col-9" style={{paddingRight:0}}>
                     <div className="accordion" id="accordionExample">
-                        {this.props.Downloads.map((it)=>(<ToDownload item={it} key={it.gid} isDownload={it.status==="active"}/>))}
+                        {this.props.Downloads.map((it)=>(<ToDownload item={it} key={it.gid} choose={this.chooseIt.bind(this)} open={it.gid===this.state.chooseId}/>))}
                     </div>
                 </div>
                 <div className="list-group col-3">
@@ -171,7 +173,7 @@ import {getAddCommandJob, getAddMetalink, getAddTorrent, getAddURL} from "../../
                 <Modal title='提醒' show={this.props.DownloadErrors.length>0} beforeClose={this.removeDownloadError.bind(this,this.props.DownloadErrors[0])}>
                     {
                         (function (that) {
-                            if(that.props.DownloadErrors.length>0&&that.props.DownloadErrors[0].id.indexOf("sendAddUriREQ_")>=0){
+                            if(that.props.DownloadErrors.length>0){
                                 return "下载链接异常"
                             }
                         })(this)
