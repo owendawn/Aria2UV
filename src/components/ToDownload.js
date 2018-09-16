@@ -110,8 +110,10 @@ class ToDownload extends Component {
         let name;
         if(this.props.item.bittorrent) {
             name=this.props.item.bittorrent.info?this.props.item.bittorrent.info.name:this.props.item.files[0].path;
-        }else{
+        }else if(this.props.item.files[0].path){
             name=this.props.item.files[0].path.substring(this.props.item.dir.length+1);
+        }else{
+            name=this.props.item.files[0].uris[0].uri;
         }
 
         let arr1 = [];
