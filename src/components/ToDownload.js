@@ -234,7 +234,7 @@ class ToDownload extends Component {
                                     </tr>
                                     {this.props.item.files[0].uris.length > 0 && <tr>
                                         <td>下载链接</td>
-                                        <td>{this.props.item.files[0].uris[0].uri || ""}</td>
+                                        <td style={{maxWidth:'700px'}}>{this.props.item.files[0].uris[0].uri || ""}</td>
                                     </tr>}
                                     {this.props.item.infoHash && <tr>
                                         <td>特征值</td>
