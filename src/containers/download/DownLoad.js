@@ -113,8 +113,8 @@ import {getAddCommandJob, getAddMetalink, getAddTorrent, getAddURL} from "../../
                         </div>
                     </div>
                     <div className="form-group">
-                        <label>最大连接数</label>
-                        <input className="form-control" type='number' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
+                        <label>最大连接数({this.getGlobalOption()['max-connection-per-server']||""})</label>
+                        <input className="form-control p-0" type='range' min='1' max='16' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
                     </div>
                     <div className="form-group">
                         <label>最大线程数</label>
@@ -137,15 +137,15 @@ import {getAddCommandJob, getAddMetalink, getAddTorrent, getAddURL} from "../../
                         </div>
                     </div>
                     <div className="form-group">
-                        <label>最大连接数</label>
-                        <input className="form-control" type='number' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
+                        <label>最大连接数({this.getGlobalOption()['max-connection-per-server']||""})</label>
+                        <input className="form-control p-0" type='range' min='1' max='16' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
                     </div>
                     <div className="form-group">
                         <label>最大线程数</label>
                         <input className="form-control" type='number' value={this.getGlobalOption().split||""} onChange={this.changeValue.bind(this,"split")}/>
                     </div>
                 </Modal>
-                <Modal title='新增磁力链接' show={this.state.showMetalink} beforeClose={this.showModal.bind(this,'showMetalink')} beforeOK={this.addMetalink.bind(this)}>
+                <Modal title='新增MetaLink' show={this.state.showMetalink} beforeClose={this.showModal.bind(this,'showMetalink')} beforeOK={this.addMetalink.bind(this)}>
                     <div className="form-group">
                         <label>下载链接</label>
                         <textarea className="form-control"  rows="3" ref='metalinkArea'/>
@@ -161,8 +161,8 @@ import {getAddCommandJob, getAddMetalink, getAddTorrent, getAddURL} from "../../
                         </div>
                     </div>
                     <div className="form-group">
-                        <label>最大连接数</label>
-                        <input className="form-control" type='number' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
+                        <label>最大连接数({this.getGlobalOption()['max-connection-per-server']||""})</label>
+                        <input className="form-control p-0" type='range' min='1' max='16' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
                     </div>
                     <div className="form-group">
                         <label>最大线程数</label>
