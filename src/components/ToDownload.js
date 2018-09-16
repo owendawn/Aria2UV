@@ -205,7 +205,7 @@ class ToDownload extends Component {
                         </nav>
                         <div className="tab-content" id="nav-tabContent" style={{fontSize:'12px'}}>
                             <div className="tab-pane fade show active" id={"nav-home" + this.props.item.gid}
-                                 role="tabpanel" aria-labelledby="nav-home-tab">
+                                 role="tabpanel" aria-labelledby="nav-home-tab" style={{overflowX:'auto'}}>
                                 <table className="table table-striped">
                                     <thead>
                                     <tr>

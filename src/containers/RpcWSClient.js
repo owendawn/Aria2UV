@@ -9,13 +9,14 @@ import {GlobalCommand} from "../constants/GlobalCommand";
 import {getBaseCommonAction, getSimpleCommonAction} from "../actions/CommonAction";
 import {RpcWSCommand} from "../constants/RpcWSCommand";
 import {PanUtil} from "../util/PanUtil";
+import {errotPng, infoJpg} from "../image/base64img";
 
 class RpcWSClient extends Component {
     constructor(props) {
         super(props);
         this.state = {
             connected: false,
-            debug: false
+            debug: false,
         }
         this.dispatch = props.dispatch;
     }
@@ -235,15 +236,15 @@ class RpcWSClient extends Component {
         } else {
             switch (result.method) {
                 case "aria2.onDownloadStart": {
-                    PanUtil.notify("通知", "任务开始下载");
+                    PanUtil.notify("通知", "任务开始下载",infoJpg);
                     break;
                 }
                 case "aria2.onDownloadComplete": {
-                    PanUtil.notify("通知", "任务下载完毕");
+                    PanUtil.notify("通知", "任务下载完毕",infoJpg);
                     break;
                 }
                 case "aria2.onDownloadError": {
-                    PanUtil.notify("通知", "<span style='color:red;'>任务下载异常终止</span>");
+                    PanUtil.notify("通知", "任务下载异常终止",errotPng);
                     break;
                 }
             }

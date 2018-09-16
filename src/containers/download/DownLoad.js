@@ -9,6 +9,7 @@ import ToDownload from '../../components/ToDownload'
 import Modal from "../../components/modal";
 import {RpcWSCommand} from "../../constants/RpcWSCommand";
 import {getAddCommandJob, getAddMetalink, getAddTorrent, getAddURL} from "../../actions/RPCWSAction";
+import {Select} from "../../components/Form";
 
 
 
@@ -120,6 +121,11 @@ import {getAddCommandJob, getAddMetalink, getAddTorrent, getAddURL} from "../../
                         <label>最大线程数</label>
                         <input className="form-control" type='number' value={this.getGlobalOption().split||""} onChange={this.changeValue.bind(this,"split")}/>
                     </div>
+                    <div className="form-group">
+                        <label>FTP类型</label>
+                        <Select  className="form-control" list={[{value:'binary',name:'binary'},{value:'ascii',name:'ascii'}]} value={this.getGlobalOption()['ftp-type']} changeEvent={this.changeValue.bind(this,"ftp-type")}/>
+                    </div>
+
                 </Modal>
                 <Modal title='新增BT' show={this.state.showBT} beforeClose={this.showModal.bind(this,'showBT')} beforeOK={this.addTorrent.bind(this)}>
                     <div className="form-group">
