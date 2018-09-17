@@ -254,10 +254,15 @@ class RpcWSClient extends Component {
     render() {
         return (
             <span>
+
+                <i className="fa fa-cloud-upload text-light"> {this.getSize(Number(this.props.Global.uploadSpeed))} </i>
+                &emsp;
+                <i className="fa fa-cloud-download text-light"> {this.getSize(Number(this.props.Global.downloadSpeed))} </i>
+                &emsp;
+                <i className={["fa fa-heartbeat", this.state.connected ? "text-light" : "text-danger"].join(" ")}> </i>
+                &emsp;
                 <button className="btn btn-outline-light" style={{padding:'2px 15px'}}>&nbsp;{"ws://"+this.props.Aria2Link.ip+":"+this.props.Aria2Link.port+"/jsonrpc"}&nbsp;</button>
-                &emsp;<i className={["fa fa-heartbeat", this.state.connected ? "text-light" : "text-danger"].join(" ")}> </i>
-                &emsp;<i className="fa fa-cloud-upload text-light"> {this.getSize(Number(this.props.Global.uploadSpeed))} </i>&emsp;
-                <i className="fa fa-cloud-download text-light"> {this.getSize(Number(this.props.Global.downloadSpeed))} </i>&emsp;
+                &emsp;
             </span>
         )
     }

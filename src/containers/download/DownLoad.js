@@ -115,7 +115,7 @@ import {Select} from "../../components/Form";
                     </div>
                     <div className="form-group">
                         <label>最大连接数({this.getGlobalOption()['max-connection-per-server']||""})</label>
-                        <input className="form-control p-0" type='range' min='1' max='16' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
+                        <input className="form-control p-0" type='range' min='1' max={Math.max(this.getGlobalOption()['max-connection-per-server']||"",16)} value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
                     </div>
                     <div className="form-group">
                         <label>最大线程数</label>
@@ -144,7 +144,7 @@ import {Select} from "../../components/Form";
                     </div>
                     <div className="form-group">
                         <label>最大连接数({this.getGlobalOption()['max-connection-per-server']||""})</label>
-                        <input className="form-control p-0" type='range' min='1' max='16' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
+                        <input className="form-control p-0" type='range' min='1' max={Math.max(this.getGlobalOption()['max-connection-per-server']||"",16)} value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
                     </div>
                     <div className="form-group">
                         <label>最大线程数</label>
@@ -168,7 +168,7 @@ import {Select} from "../../components/Form";
                     </div>
                     <div className="form-group">
                         <label>最大连接数({this.getGlobalOption()['max-connection-per-server']||""})</label>
-                        <input className="form-control p-0" type='range' min='1' max='16' value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
+                        <input className="form-control p-0" type='range' min='1' max={Math.max(this.getGlobalOption()['max-connection-per-server']||"",16)} value={this.getGlobalOption()['max-connection-per-server']||""} onChange={this.changeValue.bind(this,"max-connection-per-server")}/>
                     </div>
                     <div className="form-group">
                         <label>最大线程数</label>
