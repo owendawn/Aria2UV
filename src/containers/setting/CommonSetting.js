@@ -9,7 +9,7 @@ import {getBaseCommonAction} from "../../actions/CommonAction";
 
 class CommonSetting extends  Component{
     constructor(props){
-        super(props)
+        super(props);
         this.state={
             newOptions:{},
         };
@@ -37,10 +37,8 @@ class CommonSetting extends  Component{
     save(){
         let cp=this.state.newOptions;
         this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.UPDATE_GLOBAL_OPTION_STAT,cp)));
-        // this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.GLOBAL_OPTION_STAT)));
     }
     render(){
-        console.log(this.state);
         return (
             <div>
                 <table className="table table-striped">
@@ -68,7 +66,7 @@ class CommonSetting extends  Component{
 
                         <tr><td>启动下载未完成BT任务(bt-seed-unverified)</td><td><Select  className="form-control"  list={[{value:true,name:'是'},{value:false,name:'否'}]} value={this.getNewCfg()['bt-seed-unverified']} changeEvent={this.changeValue.bind(this,"bt-seed-unverified")}/></td></tr>
                         <tr><td>保存磁链为BT任务(bt-save-metadata)</td><td><Select className="form-control"  list={[{value:true,name:'是'},{value:false,name:'否'}]} value={this.getNewCfg()['bt-save-metadata']} changeEvent={this.changeValue.bind(this,"bt-save-metadata")}/></td></tr>
-                        <tr><td>BT任务下载最大文件数(bt-max-open-files)</td><td><Select className="form-control"  list={[{value:true,name:'是'},{value:false,name:'否'}]} value={this.getNewCfg()['bt-max-open-files']} changeEvent={this.changeValue.bind(this,"bt-max-open-files")}/></td></tr>
+                        <tr><td>BT任务下载最大文件数(bt-max-open-files)</td><td><input className="form-control"  type="number" value={this.getNewCfg()['bt-max-open-files']||""} onChange={this.changeValue.bind(this,"bt-max-open-files")}/></td></tr>
 
 
                         <tr><td></td><td><button className='btn btn-primary' onClick={this.save.bind(this)}>保存</button></td></tr>

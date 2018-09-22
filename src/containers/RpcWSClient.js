@@ -137,15 +137,15 @@ class RpcWSClient extends Component {
     }
 
     sendTellActiveREQ() {
-        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellActive","id":"sendTellActiveREQ_' + new Date().getTime() + '","params":[["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellActive","id":"sendTellActiveREQ_' + new Date().getTime() + '"}')
     }
 
     sendTellWaitingREQ() {
-        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellWaiting","id":"sendTellWaitingREQ_' + new Date().getTime() + '","params":[0,1000,["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellWaiting","id":"sendTellWaitingREQ_' + new Date().getTime() + '"}')
     }
 
     sendTellStopREQ() {
-        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellStopped","id":"sendTellStopREQ_' + new Date().getTime() + '","params":[-1,1000,["gid","totalLength","completedLength","uploadSpeed","downloadSpeed","connections","numSeeders","seeder","status","errorCode","files","bittorrent","dir","bitfield","infoHash","numPieces"]]}')
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellStopped","id":"sendTellStopREQ_' + new Date().getTime() + '"}')
     }
 
     sendGetGlobalOptionREQ() {

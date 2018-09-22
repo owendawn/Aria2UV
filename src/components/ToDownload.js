@@ -240,7 +240,7 @@ class ToDownload extends Component {
                                         <td>特征值</td>
                                         <td>{this.props.item.infoHash}</td>
                                     </tr>}
-                                    {this.props.item.announceList && (<tr>
+                                    {this.props.item.bittorrent.announceList && (<tr>
                                         <td>BT服务器&emsp;
                                             <a className='pointer' onClick={this.toggleBtList.bind(this)}>
                                                 <i className={["fa", this.state.showbtlist ? "fa-chevron-up" : "fa-chevron-down"].join(" ")}>&nbsp;</i>
