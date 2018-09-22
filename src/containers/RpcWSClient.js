@@ -258,8 +258,9 @@ class RpcWSClient extends Component {
     }
 
     render() {
-        document.querySelector("head title").innerHTML="↑"+this.getSize(Number(this.props.Global.uploadSpeed))
-            +" ↓"+this.getSize(Number(this.props.Global.downloadSpeed))
+        document.querySelector("head title").innerHTML=""
+            +"↓"+this.getSize(Number(this.props.Global.downloadSpeed))
+            +" ↑"+this.getSize(Number(this.props.Global.uploadSpeed))
             +" ~ Aria2UV";
         return (
             <span>

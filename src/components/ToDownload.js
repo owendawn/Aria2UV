@@ -143,6 +143,7 @@ class ToDownload extends Component {
 
         let arr1 = [];
         let complete = 0;
+        let alls=this.props.item.numPieces;
         if(this.props.item.bitfield) {
             let arr = this.props.item.bitfield.split("");
             arr.forEach(it => {
@@ -162,6 +163,20 @@ class ToDownload extends Component {
                     arr1 = arr1.concat(1, 1, 1, 1)
                 }
             });
+            let arr2=[];
+            let start=0;
+            alls=0;
+            this.props.item.files.forEach(it=>{
+                let size=Math.ceil(it.length/this.props.item.pieceLength);
+                if(it.selected==="true"){
+                    arr2=arr2.concat(arr1.slice(start,size));
+                    alls+=it.length;
+                }
+                start+=Math.ceil(it.length/this.props.item.pieceLength);
+            });
+
+            arr1=arr2;
+            alls=Math.floor(alls/Number(this.props.item.pieceLength));
         }
 
         return (
@@ -285,7 +300,7 @@ class ToDownload extends Component {
                                     <div className='mt-1'>&nbsp;</div>
                                     <div className="piece-legends col-12 text-center" title="已完成: 0, 共计: 3197 块">
                                         <span className='pointer'
-                                              title={"已完成: " + complete + ", 共计: " + this.props.item.numPieces + " 块"}>
+                                              title={"已完成: " + complete + ", 共计: " + alls + " 块"}>
                                             <span className="piece complete">&nbsp;</span><span>已完成</span>&emsp;
                                             <span className="piece">&nbsp;</span><span>未完成</span>
                                         </span>

@@ -30,7 +30,7 @@ class App extends Component {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-info">
-                    <Link to='/Download' className="navbar-brand">Aria2UV</Link>
+                    <Link to='/' className="navbar-brand">Aria2UV</Link>
                     <button className="navbar-toggler" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent">
                         <span className="navbar-toggler-icon">&nbsp;</span>
