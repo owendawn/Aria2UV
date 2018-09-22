@@ -16,9 +16,9 @@ class ToDownload extends Component {
         super(props);
         this.state = {
             show: false,
-            showbtlist:false
+            showbtlist:false,
+            selects:{}
         }
-        // console.log(this.props.item)
     }
 
     toggle() {
@@ -83,7 +83,6 @@ class ToDownload extends Component {
         }
     }
     command(type){
-        console.log(this.props.item)
         if(type==="remove") {
             if (this.props.item.status === "error" || this.props.item.status === "complete"|| this.props.item.status === "removed") {
                 this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.REMOVE_DOWNLOAD_RESULT,this.props.item.gid)))
@@ -99,9 +98,35 @@ class ToDownload extends Component {
         }
     }
 
+    changeSelected(idx,e){
+        let s={};
+        this.props.item.files.forEach(it=>{
+            s[it.index]=it.selected==="true";
+        });
+        let raw=Object.assign({},s,this.state.selects);
+        raw[idx]=!raw[idx];
+        this.setState({selects:raw});
+    }
 
+    saveSelects(){
+        let ses=[];
+        for(let k in this.state.selects){
+            if(this.state.selects[k]){
+                ses.push(k);
+            }
+        }
+        Object.keys(this.state.selects).length>0&&this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.UPDATE_OPTION_STAT,'["'+this.props.item.gid+'",{"select-file":"'+ses.join(",")+'"}]')));
+    }
+    toggleChoose(e){
+        let s={};
+        this.props.item.files.forEach(it=>{
+            s[it.index]=e.target.checked;
+        });
+        this.setState({selects:s});
+    }
 
     render() {
+        let that=this;
         let ratio = '0%';
         if (this.props.item.completedLength !== "0") {
             ratio = Math.round(Number(this.props.item.completedLength) * 10000 / Number(this.props.item.totalLength)) / 100 + "%";
@@ -281,16 +306,46 @@ class ToDownload extends Component {
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col" style={{width: '75%'}}>文件名</th>
+                                        <th scope="col" style={{width: '75%'}}>文件名（
+                                            {(function () {
+                                                let s={};
+                                                let count=0;
+                                                that.props.item.files&&that.props.item.files.forEach(it=>{
+                                                    s[it.index]=it.selected==="true";
+                                                });
+                                                let raw=Object.assign({},s,that.state.selects);
+                                                for(let k in raw){
+                                                    if(raw[k]){
+                                                        count++;
+                                                    }
+                                                }
+                                                return count;
+                                            })()}
+                                            ）
+                                            </th>
                                         <th scope="col">&nbsp;</th>
+                                        <th scope="col">
+                                            <input type='checkbox' onClick={this.toggleChoose.bind(this)}/>
+                                        </th>
+                                        <th scope="col"><button className='btn btn-sm btn-outline-primary' onClick={this.saveSelects.bind(this)}> <i className='fa fa-upload'/></button></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {this.props.item.files.map((it, idx) => (
-                                        <tr key={idx}>
+                                        <tr key={idx} style={it.selected==="true"?{fontWeight:'bold'}:{textDecoration:"line-through",color:"gray"}}>
                                             <td>{idx + 1}</td>
                                             <td>{it.path}</td>
+                                            <td>{it.path.substring(it.path.lastIndexOf(".")+1)}</td>
                                             <td>{this.getSize(it.completedLength) + " / " + this.getSize(it.length)}</td>
+                                            <td style={{textAlign:"center"}}>
+                                                <input type='radio'
+                                                       value={it.index}
+                                                       checked={this.state.selects[it.index]===undefined?it.selected==="true":this.state.selects[it.index]}
+                                                       // disabled={this.props.item.status!=="paused"}
+                                                       onChange={this.changeSelected.bind(this,it.index)}
+                                                       onClick={this.changeSelected.bind(this,it.index)}
+                                                />
+                                            </td>
                                         </tr>
                                     ))}
                                     </tbody>

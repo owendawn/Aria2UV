@@ -118,6 +118,8 @@ class RpcWSClient extends Component {
                             that.sendPauseREQ(it.data.data);
                         } else if (it.data.type === RpcWSCommand.UNPAUSE) {
                             that.sendUnpauseREQ(it.data.data);
+                        }else if (it.data.type === RpcWSCommand.UPDATE_OPTION_STAT) {
+                            that.sendChangeOptionREQ(it.data.data);
                         }
                         that.dispatch(getRemoveCommandJob(it.data))
                     });
@@ -141,11 +143,11 @@ class RpcWSClient extends Component {
     }
 
     sendTellWaitingREQ() {
-        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellWaiting","id":"sendTellWaitingREQ_' + new Date().getTime() + '"}')
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellWaiting","id":"sendTellWaitingREQ_' + new Date().getTime() + '","params":[0,1000]}')
     }
 
     sendTellStopREQ() {
-        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellStopped","id":"sendTellStopREQ_' + new Date().getTime() + '"}')
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.tellStopped","id":"sendTellStopREQ_' + new Date().getTime() + '","params":[-1,1000]}')
     }
 
     sendGetGlobalOptionREQ() {
@@ -206,6 +208,10 @@ class RpcWSClient extends Component {
         str = str.substr(0, str.length - 1);
         str = '[{' + str + '}]';
         this.ws.send('{"jsonrpc":"2.0","method":"aria2.changeGlobalOption","id":"sendChangeGlobalOptionREQ_' + new Date().getTime() + '","params":' + str + '}')
+    }
+
+    sendChangeOptionREQ(paramsStr) {
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.changeOption","id":"sendChangeOptionREQ_' + new Date().getTime() + '","params":' + paramsStr + '}')
     }
 
     handleMsg(result) {
