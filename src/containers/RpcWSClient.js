@@ -258,9 +258,11 @@ class RpcWSClient extends Component {
     }
 
     render() {
+        document.querySelector("head title").innerHTML="↑"+this.getSize(Number(this.props.Global.uploadSpeed))
+            +" ↓"+this.getSize(Number(this.props.Global.downloadSpeed))
+            +" ~ Aria2UV";
         return (
             <span>
-
                 <i className="fa fa-cloud-upload text-light"> {this.getSize(Number(this.props.Global.uploadSpeed))} </i>
                 &emsp;
                 <i className="fa fa-cloud-download text-light"> {this.getSize(Number(this.props.Global.downloadSpeed))} </i>

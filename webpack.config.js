@@ -26,8 +26,7 @@ module.exports = {
                     }
                 },
                 exclude: /node_modules/
-            },
-            {
+            },{
                 test: /\.(scss)$/,
                 loaders: ["style-loader", "css-loader", "sass-loader"],
                 exclude: /node_modules/
@@ -39,9 +38,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.template.html'),
             inject: true,
-            options:{
-                title:"Aria2UV"
-            }
+            title:"Aria2UV"
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',

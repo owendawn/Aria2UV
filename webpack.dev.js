@@ -72,9 +72,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.template.html'),
             inject: true,
-            options:{
-                title:"Aria2UV"
-            }
+            title:"Aria2UV"
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',
