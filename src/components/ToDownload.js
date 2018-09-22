@@ -306,7 +306,7 @@ class ToDownload extends Component {
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col" style={{width: '75%'}}>文件名（
+                                        <th scope="col" style={{width: '65%'}}>文件名（
                                             {(function () {
                                                 let s={};
                                                 let count=0;
@@ -324,6 +324,7 @@ class ToDownload extends Component {
                                             ）
                                             </th>
                                         <th scope="col">&nbsp;</th>
+                                        <th scope="col">&nbsp;</th>
                                         <th scope="col">
                                             <input type='checkbox' onClick={this.toggleChoose.bind(this)}/>
                                         </th>
@@ -337,6 +338,7 @@ class ToDownload extends Component {
                                             <td>{it.path}</td>
                                             <td>{it.path.substring(it.path.lastIndexOf(".")+1)}</td>
                                             <td>{this.getSize(it.completedLength) + " / " + this.getSize(it.length)}</td>
+                                            <td>{Math.round(Number(it.completedLength)*10000 /Number(it.length))/100+"%"}</td>
                                             <td style={{textAlign:"center"}}>
                                                 <input type='radio'
                                                        value={it.index}
