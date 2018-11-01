@@ -47,9 +47,9 @@ class RpcWSClient extends Component {
     finishConnect(code){
         this.props.dispatch(getBaseCommonAction(GlobalCommand.FINISH_RECONNECT,{status:code}));
     }
-    getSize(size){
+    getSize(size,replace){
         if(isNaN(Number(size))){
-            return ' -- ';
+            return replace||' -- ';
         }
         if(size>1024*1024*1024) {
             return Math.round(size * 100 / 1024 / 1024/1024) / 100 + "G/s";
@@ -258,10 +258,10 @@ class RpcWSClient extends Component {
     }
 
     render() {
-        document.querySelector("head title").innerHTML=""
-            +"↓"+this.getSize(Number(this.props.Global.downloadSpeed))
-            +" ↑"+this.getSize(Number(this.props.Global.uploadSpeed))
-            +" ~ Aria2UV";
+        document.title="Aria2UV ~ "
+            +"↓"+this.getSize(Number(this.props.Global.downloadSpeed)," - . - ")
+            +" ↑"+this.getSize(Number(this.props.Global.uploadSpeed)," - . - ")
+            +"";
         return (
             <span>
                 <i className="fa fa-cloud-upload text-light"> {this.getSize(Number(this.props.Global.uploadSpeed))} </i>
@@ -272,6 +272,15 @@ class RpcWSClient extends Component {
                 &emsp;
                 <button className="btn btn-outline-light" style={{padding:'2px 15px'}}>&nbsp;{"ws://"+this.props.Aria2Link.ip+":"+this.props.Aria2Link.port+"/jsonrpc"}&nbsp;</button>
                 &emsp;
+                <a href="https://github.com/suryhp/BaiduExporter/releases" target="_blank">
+                    <i className="fa fa-paper-plane text-light" title="BaiduYun插件"/></a>
+                &emsp;
+                <a href="https://pan.baidu.com/s/1d_w00o3ATBhbFj0Q0DvBVQ" target="_blank">
+                    <i className="fa fa-magic text-light" title="aria2服务包"/></a>
+                &emsp;
+                <a href="https://github.com/owendawn/Aria2UV" target="_blank">
+                    <i className="fa fa-github  text-light" title="UI源码"/></a>
+
             </span>
         )
     }

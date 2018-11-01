@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack=require('webpack');
 
 module.exports = {
-    // mode:'production',
-    mode:'development',
+    mode:'production',
+    // mode:'development',
     // eval-source-map is faster for development
     devtool: '#eval-source-map',
     entry: [
