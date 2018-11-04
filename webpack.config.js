@@ -34,6 +34,13 @@ module.exports = {
         ],
 
     },
+    externals: [{
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+        'redux': 'Redux',
+        'react-redux': 'ReactRedux',
+        'react-router-dom': 'ReactRouterDOM',
+    }],
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.template.html'),
@@ -41,10 +48,7 @@ module.exports = {
             title:"Aria2UV"
         }),
         new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            'window.$': 'jquery',
+
         })
     ]
 };

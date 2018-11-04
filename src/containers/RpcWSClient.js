@@ -1,15 +1,14 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import ReactRedux,{connect} from 'react-redux'
 import {
     getUpdateDownloadStats, getUpdateGlobalStat, getUpdateWaitingStats, getUpdateFinishStats,
     getUpdateGlobalOptionStat, getRemoveCommandJob
 } from '../actions/RPCWSAction'
-import {withRouter} from "react-router-dom";
+import ReactRouterDOM,{withRouter} from "react-router-dom";
 import {GlobalCommand} from "../constants/GlobalCommand";
 import {getBaseCommonAction, getSimpleCommonAction} from "../actions/CommonAction";
 import {RpcWSCommand} from "../constants/RpcWSCommand";
 import {PanUtil} from "../util/PanUtil";
-import {errotPng, infoJpg} from "../image/base64img";
 
 class RpcWSClient extends Component {
     constructor(props) {
@@ -242,15 +241,15 @@ class RpcWSClient extends Component {
         } else {
             switch (result.method) {
                 case "aria2.onDownloadStart": {
-                    PanUtil.notify("通知", "任务开始下载",infoJpg);
+                    PanUtil.notify("通知", "任务开始下载","http://i67.tinypic.com/2d83xhg.jpg");
                     break;
                 }
                 case "aria2.onDownloadComplete": {
-                    PanUtil.notify("通知", "任务下载完毕",infoJpg);
+                    PanUtil.notify("通知", "任务下载完毕","http://i67.tinypic.com/2d83xhg.jpg");
                     break;
                 }
                 case "aria2.onDownloadError": {
-                    PanUtil.notify("通知", "任务下载异常终止",errotPng);
+                    PanUtil.notify("通知", "任务下载异常终止","http://i65.tinypic.com/5uk1l3.jpg");
                     break;
                 }
             }

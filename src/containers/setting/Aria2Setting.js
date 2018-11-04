@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux'
-import {withRouter} from "react-router-dom";
+import ReactRedux,{connect} from 'react-redux'
+import ReactRouterDOM,{withRouter} from "react-router-dom";
 import {RpcWSCommand} from "../../constants/RpcWSCommand";
 import {getAddCommandJob} from "../../actions/RPCWSAction";
 import {Select} from "../../components/Form";

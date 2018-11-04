@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
-import {withRouter, Link} from 'react-router-dom'
-import {connect} from 'react-redux'
+import ReactRouterDOM,{withRouter, Link} from 'react-router-dom'
+import ReactRedux,{connect} from 'react-redux'
 import {PanUtil}from '../util/PanUtil'
-
-import  'bootstrap'
 
 import './ToDownload.scss'
 import {getBaseCommonAction} from "../actions/CommonAction";
@@ -347,7 +345,9 @@ class ToDownload extends Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {this.props.item.files.map((it, idx) => (
+                                    {this.props.item.files.sort(function(a,b){
+                                        return a.path<b.path?1:-1;
+                                    }).map((it, idx) => (
                                         <tr key={idx} style={it.selected==="true"?{fontWeight:'bold'}:{textDecoration:"line-through",color:"gray"}}>
                                             <td>{idx + 1}</td>
                                             <td>{it.path}</td>

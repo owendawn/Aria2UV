@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {Switch, Route, Link,withRouter,Redirect} from 'react-router-dom'
-import {connect} from 'react-redux'
+import ReactRouterDOM,{Switch, Route, Link,withRouter,Redirect} from 'react-router-dom'
+import ReactRedux,{connect} from 'react-redux'
 
 import './App.scss'
-import 'jquery'
-import 'bootstrap';
 
 import Aria2Setting from './setting/Aria2Setting'
 import CommonSetting from './setting/CommonSetting'

@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import {withRouter,Link} from 'react-router-dom'
-import {connect}from 'react-redux'
+import ReactRouterDOM,{withRouter,Link} from 'react-router-dom'
+import ReactRedux,{connect}from 'react-redux'
 
 import './Menu.scss'
 

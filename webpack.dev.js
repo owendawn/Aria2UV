@@ -35,6 +35,13 @@ module.exports = {
         ],
 
     },
+    externals: [{
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+        'redux': 'Redux',
+        'react-redux': 'ReactRedux',
+        'react-router-dom': 'ReactRouterDOM',
+    }],
     optimization: {
         runtimeChunk: {
             name: "runtime"
@@ -44,7 +51,7 @@ module.exports = {
             chunks: 'all',
             minSize: 30000,
             maxSize: 0,
-            minChunks: 1,
+            minChunks: 5,
             maxAsyncRequests: 5,
             maxInitialRequests: 3,
             automaticNameDelimiter: '~',
@@ -76,10 +83,7 @@ module.exports = {
             title:"Aria2UV"
         }),
         new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            'window.$': 'jquery',
+
         })
     ]
 };

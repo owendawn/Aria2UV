@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux'
+import Redux,{combineReducers} from 'redux'
 
 import Downloads from './Downloads'
 import Global from './Global'

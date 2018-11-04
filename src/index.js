@@ -1,14 +1,14 @@
 import React from 'react';
-import {render} from 'react-dom';
-import {Provider} from 'react-redux'
-import { createStore } from 'redux'
-import {BrowserRouter} from 'react-router-dom'
+import ReactDOM,{render} from 'react-dom';
+import ReactRedux,{Provider} from 'react-redux'
+import Redux,{ createStore } from 'redux'
+import ReactRouterDOM,{BrowserRouter} from 'react-router-dom'
 
 import App from './containers/App'
 import rootReducer from './reducers/index'
 
 const renderDom = Component => {
-    render(
+    ReactDOM.render(
         <Provider store={createStore(rootReducer)}>
             <BrowserRouter>
                 <Component/>

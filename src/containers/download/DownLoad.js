@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import {connect} from 'react-redux'
-import {withRouter} from "react-router-dom";
+import ReactRedux,{connect} from 'react-redux'
+import ReactRouterDOM,{withRouter} from "react-router-dom";
 
 import {getBaseCommonAction, getSimpleCommonAction} from '../../actions/CommonAction'
 import {GlobalCommand} from "../../constants/GlobalCommand";
