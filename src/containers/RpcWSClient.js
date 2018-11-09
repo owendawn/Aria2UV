@@ -119,6 +119,10 @@ class RpcWSClient extends Component {
                             that.sendUnpauseREQ(it.data.data);
                         }else if (it.data.type === RpcWSCommand.UPDATE_OPTION_STAT) {
                             that.sendChangeOptionREQ(it.data.data);
+                        }else if (it.data.type === RpcWSCommand.GET_TODO_OPTION) {
+                            that.sendGetOptionREQ(it.data.data);
+                        }else if (it.data.type === RpcWSCommand.REMOVE_DOWNLOAD_RESULT) {
+                            that.sendRemoveDownloadResultREQ(it.data.data);
                         }
                         that.dispatch(getRemoveCommandJob(it.data))
                     });
@@ -174,7 +178,7 @@ class RpcWSClient extends Component {
         for (let k in params) {
             p += '"' + k + '":"' + params[k] + '",';
         }
-        p = p.substr(0, p.length - 1);
+        p = p.substr(0, p.length - 1).replace(/\n/g,"\\n");
         let str = '[["' + url + '"],{' + p + '}]';
         this.ws.send('{"jsonrpc":"2.0","method":"aria2.addUri","id":"sendAddUriREQ_' + new Date().getTime() + '","params":' + str + '}')
     }
@@ -213,6 +217,12 @@ class RpcWSClient extends Component {
         this.ws.send('{"jsonrpc":"2.0","method":"aria2.changeOption","id":"sendChangeOptionREQ_' + new Date().getTime() + '","params":' + paramsStr + '}')
     }
 
+    sendGetOptionREQ(gid) {
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.getOption","id":"sendGetOptionREQ_'+gid+'_' + new Date().getTime() + '","params":["' + gid + '"]}')
+    }
+    sendRemoveDownloadResultREQ(gid) {
+        this.ws.send('{"jsonrpc":"2.0","method":"aria2.removeDownloadResult","id":"sendRemoveDownloadResultREQ_' + new Date().getTime() + '","params":["' + gid + '"]}')
+    }
     handleMsg(result) {
         if (result.id) {
             if (result.id.indexOf("sendGetGlobalStatREQ_") >= 0) {
@@ -225,6 +235,8 @@ class RpcWSClient extends Component {
                 this.dispatch(getUpdateFinishStats(result.result))
             } else if (result.id.indexOf("sendGetGlobalOptionREQ_") >= 0) {
                 this.dispatch(getUpdateGlobalOptionStat(result.result))
+            }  else if (result.id.indexOf("sendGetOptionREQ_") >= 0) {
+                this.dispatch(getBaseCommonAction(RpcWSCommand.ADD_GET_TODO_OPTION,result))
             } else if (result.id.indexOf("sendAddUriREQ_") >= 0) {
                 if (result.error) {
                     this.dispatch(getBaseCommonAction(RpcWSCommand.Add_DOWNLOAD_ERROR, result))

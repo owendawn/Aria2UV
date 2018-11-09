@@ -6,7 +6,7 @@ import {PanUtil}from '../util/PanUtil'
 import './ToDownload.scss'
 import {getBaseCommonAction} from "../actions/CommonAction";
 import {RpcWSCommand} from "../constants/RpcWSCommand";
-import {getAddCommandJob} from "../actions/RPCWSAction";
+import {getAddCommandJob, getAddURL} from "../actions/RPCWSAction";
 import {ErrorCode} from "../util/ErrorCode";
 
 class ToDownload extends Component {
@@ -15,7 +15,17 @@ class ToDownload extends Component {
         this.state = {
             show: false,
             showbtlist:false,
-            selects:{}
+            selects:{},
+            info:null
+        }
+    }
+    componentDidMount(){
+        this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.GET_TODO_OPTION, this.props.item.gid)));
+    }
+    componentWillReceiveProps (){
+        if(this.props.info&&this.state.info===null&&this.props.info.length>0){
+            this.setState({info:this.props.info[0].result});
+            this.props.dispatch(getBaseCommonAction(RpcWSCommand.REMOVE_GET_TODO_OPTION, this.props.info[0]));
         }
     }
 
@@ -92,7 +102,12 @@ class ToDownload extends Component {
         }else if(type==="unpause"){
             this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.UNPAUSE, this.props.item.gid)));
         }else if(type==="redownload"){
-
+            let url=this.props.item.files[0].uris[0].uri;
+            console.log(this.state.info,url)
+            if(this.state.info) {
+                this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.REMOVE_DOWNLOAD_RESULT, this.props.item.gid)));
+                this.props.dispatch(getAddCommandJob(getAddURL(url, this.state.info)));
+            }
         }
     }
 
@@ -124,6 +139,7 @@ class ToDownload extends Component {
     }
 
     render() {
+
         let that=this;
         let ratio = '0%';
         if (this.props.item.completedLength !== "0") {
@@ -205,6 +221,8 @@ class ToDownload extends Component {
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     {this.props.item.status==="paused"&&<a className="dropdown-item text-success" href="#"  onClick={this.command.bind(this,"unpause")}>开始</a>}
                                     {this.props.item.status==="active"&&<a className="dropdown-item text-warning" href="#"  onClick={this.command.bind(this,"pause")}>暂停</a>}
+                                    {(this.props.item.status === "error" || this.props.item.status === "complete"|| this.props.item.status === "removed")
+                                        &&<a className="dropdown-item text-info" href="#"  onClick={this.command.bind(this,"redownload")}>重新下载</a>}
                                     <div className='dropdown-divider'/>
                                     <a className="dropdown-item text-danger" href="#" onClick={this.command.bind(this,"remove")}>删除</a>
                                 </div>
@@ -379,4 +397,5 @@ class ToDownload extends Component {
     }
 }
 
-export default withRouter(connect()(ToDownload));
+const mapStateToProps=(state)=>(state);
+export default withRouter(connect(mapStateToProps)(ToDownload));

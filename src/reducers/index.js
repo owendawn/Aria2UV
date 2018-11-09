@@ -7,6 +7,7 @@ import Finishs from './Finishs'
 import CommandJobs from './CommandJobs'
 import GlobalOptions from './GlobalOptions'
 import DownloadErrors from "./DownloadErrors";
+import ToDownloadOption from "./ToDownloadOption";
 import {Aria2Link} from "./Aria2Link";
 
 export default combineReducers({
@@ -14,6 +15,8 @@ export default combineReducers({
     Downloads,
     Waitings,
     Finishs,
+
+    ToDownloadOption,
 
     CommandJobs,
     GlobalOptions,
