@@ -221,12 +221,12 @@ class ToDownload extends Component {
                             <div className="dropdown float-right">
                                 <button className="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{padding:' 0.05rem 0.5rem'}}/>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    {this.props.item.status==="paused"&&<a className="dropdown-item text-success" href="#"  onClick={this.command.bind(this,"unpause")}>开始</a>}
-                                    {this.props.item.status==="active"&&<a className="dropdown-item text-warning" href="#"  onClick={this.command.bind(this,"pause")}>暂停</a>}
+                                    {this.props.item.status==="paused"&&<a className="dropdown-item text-success"  onClick={this.command.bind(this,"unpause")}>开始</a>}
+                                    {this.props.item.status==="active"&&<a className="dropdown-item text-warning" onClick={this.command.bind(this,"pause")}>暂停</a>}
                                     {(this.props.item.status === "error" || this.props.item.status === "complete"|| this.props.item.status === "removed")
-                                        &&<a className="dropdown-item text-info" href="#"  onClick={this.command.bind(this,"redownload")}>重新下载</a>}
+                                        &&<a className="dropdown-item text-info" onClick={this.command.bind(this,"redownload")}>重新下载</a>}
                                     <div className='dropdown-divider'/>
-                                    <a className="dropdown-item text-danger" href="#" onClick={this.command.bind(this,"remove")}>删除</a>
+                                    <a className="dropdown-item text-danger" onClick={this.command.bind(this,"remove")}>删除</a>
                                 </div>
                             </div>
                         </div>

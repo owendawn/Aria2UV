@@ -28,7 +28,7 @@ class App extends Component {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-info">
-                    <Link to='./Download' className="navbar-brand">Aria2UV</Link>
+                    <Link to='/' className="navbar-brand">Aria2UV</Link>
                     <button className="navbar-toggler" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent">
                         <span className="navbar-toggler-icon">&nbsp;</span>
@@ -37,17 +37,17 @@ class App extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <Link to='./Download' className="nav-link">下载管理</Link>
+                                <Link to='/Download' className="nav-link">下载管理</Link>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                                <a className="nav-link dropdown-toggle" id="navbarDropdown"
                                    data-toggle="dropdown">
                                     Aria2配置
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <Link to='./Aria2Setting' className="dropdown-item">Aria2服务器配置</Link>
+                                    <Link to='/Aria2Setting' className="dropdown-item">Aria2服务器配置</Link>
                                     <div className="dropdown-divider" style={{borderTopWidth:'2px'}}/>
-                                    <Link to='./CommonSetting' className="dropdown-item">通用设置</Link>
+                                    <Link to='/CommonSetting' className="dropdown-item">通用设置</Link>
                                 </div>
                             </li>
                         </ul>
@@ -64,13 +64,6 @@ class App extends Component {
                         <Route exact path='/Waiting' component={Waiting}/>
                         <Route exact path='/CommonSetting' component={CommonSetting}/>
                         <Route exact path='/Aria2Setting' component={Aria2Setting}/>
-
-                        <Route exact path='/Aria2UV/'  render={() => <Redirect to="/Aria2UV/Download" />}/>
-                        <Route exact path='/Aria2UV/Download' component={Download}/>
-                        <Route exact path='/Aria2UV/Finish' component={Finish}/>
-                        <Route exact path='/Aria2UV/Waiting' component={Waiting}/>
-                        <Route exact path='/Aria2UV/CommonSetting' component={CommonSetting}/>
-                        <Route exact path='/Aria2UV/Aria2Setting' component={Aria2Setting}/>
                     </Switch>
                 </main>
             </div>

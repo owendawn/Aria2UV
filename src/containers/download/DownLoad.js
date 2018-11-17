@@ -84,10 +84,10 @@ import {Select} from "../../components/Form";
         return(
             <div className="row">
                 <nav aria-label="breadcrumb" className='col-12'>
-                    <ol className="breadcrumb  mb-0" style={{    padding: '0.2rem 1rem'}}>
-                        <li className="breadcrumb-item"><a className='btn btn-link' href='#' onClick={this.showModal.bind(this,'showURL')}>新增下载链接</a></li>
-                        <li className="breadcrumb-item"><a className='btn btn-link' href='#' onClick={this.showModal.bind(this,'showBT')}>新增BT</a></li>
-                        <li className="breadcrumb-item"><a className='btn btn-link' href='#' onClick={this.showModal.bind(this,'showMetalink')}>新增MetaLink</a></li>
+                    <ol className="breadcrumb  mb-0" style={{color:'#007bff', padding: '0.2rem 1rem'}}>
+                        <li className="breadcrumb-item"><a className='btn btn-link'  onClick={this.showModal.bind(this,'showURL')}>新增下载链接</a></li>
+                        <li className="breadcrumb-item"><a className='btn btn-link'  onClick={this.showModal.bind(this,'showBT')}>新增BT</a></li>
+                        <li className="breadcrumb-item"><a className='btn btn-link'  onClick={this.showModal.bind(this,'showMetalink')}>新增MetaLink</a></li>
                     </ol>
                 </nav>
                 <div data-spy="scroll" data-target="#list-example" data-offset="0" className="scrollspy-example col-9" style={{paddingRight:0}}>
