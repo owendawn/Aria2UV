@@ -27,7 +27,7 @@ class Waiting extends Component{
             <div className="row">
                 <div data-spy="scroll" data-target="#list-example" data-offset="0" className="scrollspy-example col-9">
                     <div className="accordion" id="accordionExample">
-                        {this.props.Waitings.map((it)=>(<ToDownload item={it} key={it.gid} choose={this.chooseIt.bind(this)} open={it.gid===this.state.chooseId}/>))}
+                        {this.props.Waitings.map((it)=>(<ToDownload item={it} key={it.gid} choose={this.chooseIt.bind(this)} open={it.gid===this.state.chooseId} info={this.props.ToDownloadOption.filter(o=>o.id.indexOf(it.gid)!==-1)}/>))}
                     </div>
                 </div>
                 <div className="list-group col-3">

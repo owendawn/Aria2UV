@@ -16,15 +16,17 @@ class ToDownload extends Component {
             show: false,
             showbtlist:false,
             selects:{},
-            info:null
+            info:undefined
         }
     }
     componentDidMount(){
         this.props.dispatch(getAddCommandJob(getBaseCommonAction(RpcWSCommand.GET_TODO_OPTION, this.props.item.gid)));
     }
     componentWillReceiveProps (){
-        if(this.props.info&&this.state.info===null&&this.props.info.length>0){
-            this.setState({info:this.props.info[0].result});
+        if(this.props.info&&this.state.info===undefined&&this.props.info.length>0){
+            this.setState({info:this.props.info[0].result},()=>{
+                console.log(this.state.info);
+            });
             this.props.dispatch(getBaseCommonAction(RpcWSCommand.REMOVE_GET_TODO_OPTION, this.props.info[0]));
         }
     }

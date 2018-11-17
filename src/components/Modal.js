@@ -16,7 +16,7 @@ class Modal extends Component{
     }
     render(){
         return(
-            <div className={["modal fade",this.props.show?"show":""].join(" ")} id="exampleModalLong" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div className={["modal fade",this.props.show?"show":""].join(" ")} id="exampleModalLong" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"  style={{overflow:"auto"}}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">

@@ -286,7 +286,7 @@ class RpcWSClient extends Component {
                 <a href="https://github.com/suryhp/BaiduExporter/releases" target="_blank">
                     <i className="fa fa-paper-plane text-light" title="BaiduYun插件"/></a>
                 &emsp;
-                <a href="https://pan.baidu.com/s/1d_w00o3ATBhbFj0Q0DvBVQ" target="_blank">
+                <a href="https://pan.baidu.com/s/1z5K2wFulPkm03bRnrjA4AQ" target="_blank">
                     <i className="fa fa-magic text-light" title="aria2服务包"/></a>
                 &emsp;
                 <a href="https://github.com/owendawn/Aria2UV" target="_blank">

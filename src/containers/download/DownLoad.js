@@ -92,7 +92,7 @@ import {Select} from "../../components/Form";
                 </nav>
                 <div data-spy="scroll" data-target="#list-example" data-offset="0" className="scrollspy-example col-9" style={{paddingRight:0}}>
                     <div className="accordion" id="accordionExample">
-                        {this.props.Downloads.map((it)=>(<ToDownload item={it} key={it.gid} choose={this.chooseIt.bind(this)} open={it.gid===this.state.chooseId}/>))}
+                        {this.props.Downloads.map((it)=>(<ToDownload item={it} key={it.gid} choose={this.chooseIt.bind(this)} open={it.gid===this.state.chooseId} info={this.props.ToDownloadOption.filter(o=>o.id.indexOf(it.gid)!==-1)}/>))}
                     </div>
                 </div>
                 <div className="list-group col-3">
@@ -121,11 +121,19 @@ import {Select} from "../../components/Form";
                         <label>最大线程数</label>
                         <input className="form-control" type='number' value={this.getGlobalOption().split||""} onChange={this.changeValue.bind(this,"split")}/>
                     </div>
+                    <hr style={{border:"3px", borderTop: "2px dotted rgba(0,0,0,.1)"}}/>
                     <div className="form-group">
                         <label>FTP类型</label>
                         <Select  className="form-control" list={[{value:'binary',name:'binary'},{value:'ascii',name:'ascii'}]} value={this.getGlobalOption()['ftp-type']} changeEvent={this.changeValue.bind(this,"ftp-type")}/>
                     </div>
-
+                    <div className="form-group">
+                        <label>FTP用户</label>
+                        <input className="form-control" type='text' value={this.getGlobalOption()["ftp-user"]||""} onChange={this.changeValue.bind(this,"ftp-user")}/>
+                    </div>
+                    <div className="form-group">
+                        <label>FTP密码</label>
+                        <input className="form-control" type='text' value={this.getGlobalOption()["ftp-passwd"]||""} onChange={this.changeValue.bind(this,"ftp-passwd")}/>
+                    </div>
                 </Modal>
                 <Modal title='新增BT' show={this.state.showBT} beforeClose={this.showModal.bind(this,'showBT')} beforeOK={this.addTorrent.bind(this)}>
                     <div className="form-group">
