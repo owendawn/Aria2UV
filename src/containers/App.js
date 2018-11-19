@@ -40,7 +40,7 @@ class App extends Component {
                                 <Link to='/Download' className="nav-link">下载管理</Link>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdown"
+                                <a className="nav-link dropdown-toggle pointer" id="navbarDropdown"
                                    data-toggle="dropdown">
                                     Aria2配置
                                 </a>

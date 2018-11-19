@@ -35,8 +35,8 @@ class Menu extends Component{
                     <p className="card-text">☺ -v- Jest with an ass and he will flap you in the face with his tail.</p>
                 </div>
                 <div className="card-body">
-                    <a  className="card-link text-primary">HaHa</a>
-                    <a  className="card-link text-primary">HeHe</a>
+                    <a  className="card-link text-primary pointer">HaHa</a>
+                    <a  className="card-link text-primary pointer">HeHe</a>
                 </div>
             </div>
         )

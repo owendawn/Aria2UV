@@ -7,9 +7,9 @@ module.exports = {
     // mode:'development',
     // eval-source-map is faster for development
     devtool: '#eval-source-map',
-    entry: [
-        path.resolve(__dirname, 'src/index.js'),
-    ],
+    entry: {
+        index:path.resolve(__dirname, 'src/index.js'),
+    },
     output: {
         path: path.resolve(__dirname, 'dist'), // 输出的路径
         // filename: 'bundle.js',  // 打包后文件
@@ -50,19 +50,29 @@ module.exports = {
         splitChunks: {
             chunks: 'all',
             minSize: 30000,
-            maxSize: 0,
             minChunks: 5,
             maxAsyncRequests: 5,
             maxInitialRequests: 3,
             automaticNameDelimiter: '~',
             name: true,
             cacheGroups: {
-                common: {
+                default: false,
+                vendors: false,
+                components: {
+                    test: /[\\/]components[\\/]/,
                     chunks: "initial",
-                    name: "common",
-                    minChunks: 2,
-                    maxInitialRequests: 5,
-                    minSize: 0
+                    name: "components",
+                    minSize: 0,
+                    priority: 11,
+                    enforce: true,
+                },
+                containers: {
+                    test: /[\\/]containers[\\/]/,
+                    chunks: "initial",
+                    name: "containers",
+                    minSize: 0,
+                    priority: 11,
+                    enforce: true,
                 },
                 //第三方组件
                 vendor: {
@@ -79,7 +89,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.template.html'),
             inject: true,
-            title:"Aria2UV"
+            title:"Aria2UV",
+            chunks: ['index', 'runtime', 'vendor', 'containers',"components"]
         }),
         new webpack.ProvidePlugin({
 
