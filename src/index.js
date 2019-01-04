@@ -14,7 +14,7 @@ const renderDom = Component => {
                 <Component/>
             </HashRouter>
         </Provider>
-                ,
+        ,
         document.getElementById('app')
     );
 }

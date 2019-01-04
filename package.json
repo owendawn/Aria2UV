@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js",
-    "dev": "node dev-server"
+    "watch":"webpack --watch",
+    "watchdev":"webpack --watch --env=development ",
+    "build": "webpack   --config webpack.config.js",
+    "builddev": "webpack  --env=development  --config webpack.config.js",
+    "dev": "node dev-server --env=production --assever=true"
   },
   "keywords": [
     "aria2",
@@ -33,6 +36,7 @@
     "style-loader": "^0.23.0"
   },
   "devDependencies": {
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.2.0",
     "react-hot-loader": "^4.3.6",
     "webpack": "^4.17.2",

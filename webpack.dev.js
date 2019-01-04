@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
 const webpack=require('webpack');
 
 module.exports = {
@@ -29,7 +30,11 @@ module.exports = {
                 exclude: /node_modules/
             },{
                 test: /\.(scss)$/,
-                loaders: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"],
+                 // loaders: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"],
+                 use:ExtractTextWebpackPlugin.extract({
+                    fallback:'style-loader',
+                    use:"css-loader?sourceMap!sass-loader?sourceMap"
+                }),
                 exclude: /node_modules/
             },
         ],
@@ -63,7 +68,7 @@ module.exports = {
                     chunks: "initial",
                     name: "components",
                     minSize: 0,
-                    priority: 11,
+                    priority: 10,
                     enforce: true,
                 },
                 containers: {
@@ -71,7 +76,7 @@ module.exports = {
                     chunks: "initial",
                     name: "containers",
                     minSize: 0,
-                    priority: 11,
+                    priority: 10,
                     enforce: true,
                 },
                 //第三方组件
@@ -86,12 +91,17 @@ module.exports = {
         }
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+      
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/index.template.html'),
             inject: true,
             title:"Aria2UV",
+            filename:'index.html',
             chunks: ['index', 'runtime', 'vendor', 'containers',"components"]
+        }),
+        new ExtractTextWebpackPlugin({
+            filename: 'app/css/[name].css',
+            ignoreOrder: true
         }),
         new webpack.ProvidePlugin({
 
