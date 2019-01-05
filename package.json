@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch":"webpack --watch",
-    "watchdev":"webpack --watch --env=development ",
+    "watch": "webpack --watch",
+    "watchdev": "webpack --watch --env=development ",
     "build": "webpack   --config webpack.config.js",
     "builddev": "webpack  --env=development  --config webpack.config.js",
     "dev": "node dev-server --env=production --assever=true"
@@ -41,6 +41,6 @@
     "react-hot-loader": "^4.3.6",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
+    "webpack-dev-server": "^3.1.14"
   }
 }
