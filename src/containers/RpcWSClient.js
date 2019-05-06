@@ -289,7 +289,7 @@ class RpcWSClient extends Component {
                 <a href="https://pan.baidu.com/s/1z5K2wFulPkm03bRnrjA4AQ" target="_blank">
                     <i className="fa fa-magic text-light" title="aria2服务包"/></a>
                 &emsp;
-                <a href="https://github.com/owendawn/Aria2UV" target="_blank">
+                <a href="https://github.com/owendawn/Aria2UV-reactjs" target="_blank">
                     <i className="fa fa-github  text-light" title="UI源码"/></a>
 
             </span>
